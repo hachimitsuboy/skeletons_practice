@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_practice/providers/shareProvider.dart';
+import 'package:skeletons/skeletons.dart';
 
 FutureProvider<List<String>> futureWordListProvider =
     FutureProvider((ref) async {
   //shared_preferencesから保存されているwordListを取り出す
   final getList = await ref.read(shareProvider).getData();
   ref.read(wordListProvider.notifier).state = getList;
+  await Future.delayed(const Duration(seconds: 5));
   return getList;
 });
 
@@ -15,7 +17,7 @@ StateProvider<List<String>> wordListProvider = StateProvider((ref) => []);
 void main() {
   runApp(
     const ProviderScope(
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
@@ -55,7 +57,7 @@ class MyHomePage extends ConsumerWidget {
               controller: _textEditingController,
             ),
           ),
-          Flexible(
+          Expanded(
             child: future.when(
               data: (data) {
                 return (data.isEmpty)
@@ -86,8 +88,21 @@ class MyHomePage extends ConsumerWidget {
                         },
                       );
               },
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
+              loading: () => ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SkeletonItem(
+                      child: SkeletonLine(
+                        style: SkeletonLineStyle(
+                          height: 45,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
               error: (Object error, StackTrace? stackTrace) => Center(
                 child: Text("エラー: $error"),

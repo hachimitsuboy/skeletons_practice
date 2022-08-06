@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_practice/providers/shareProvider.dart';
 import 'package:skeletons/skeletons.dart';
 
+
 FutureProvider<List<String>> futureWordListProvider =
     FutureProvider((ref) async {
   //shared_preferencesから保存されているwordListを取り出す

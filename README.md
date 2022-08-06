@@ -5,6 +5,6 @@ FutureProviderのwhenメソッドの場合分けによって、ローディン�
 
 Skeletons,Riverpodパッケージをお忘れなく
 
-##表示画面
+## 表示画面
 
 https://user-images.githubusercontent.com/39763423/183234749-c3356049-796f-408e-bf87-bec79f306f72.mp4
